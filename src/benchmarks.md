@@ -60,3 +60,11 @@ Optimizar importa cuando:
 * el coste de infraestructura depende del tiempo de CPU
 
 La eleccion adecuada de librerias permite multiplicar el rendimiento por mas de 40 sin abandonar Python ni aumentar la complejidad del codigo.
+
+## Relacion con el proyecto
+
+En el contexto del proyecto de **entrenar un modelo y desplegarlo como API de predicciones**, estos resultados tienen impacto directo.
+La API prioriza latencia y coste por peticion, no una precision matematica extrema, por lo que **float32 es la opcion mas adecuada**: reduce casi a la mitad el tiempo de calculo y el consumo de memoria, permitiendo atender mas peticiones por segundo con la misma infraestructura.
+
+El experimento demuestra que la parte critica del sistema no debe implementarse con bucles Python, sino mediante **NumPy o Numba**, que delegan el calculo a codigo nativo.
+Esto permite mantener Python como lenguaje principal del proyecto, obteniendo productividad en el entrenamiento y, al mismo tiempo, rendimiento suficiente para un servicio en produccion sin necesidad de reescribir el sistema en C o Java.
